@@ -54,3 +54,6 @@ reportWebVitals();
 // Point: Forget to call function
 // Point: Typo in object key/vale
 // Point: Trying to access object illegally
+
+// Note: Use npx to run local dependencies!
+// Note: Use github build workflows to enable continuous integration!
