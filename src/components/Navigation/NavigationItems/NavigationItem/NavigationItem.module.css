@@ -1,0 +1,42 @@
+.NavigationItem {
+	display: block;
+	width: 100%;
+	margin: 1rem 0;
+}
+
+.NavigationItem a {
+	color: #8f5c2c;
+	text-decoration: none;
+	width: 100%;
+	display: block;
+}
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+	color: #40a4c8;
+}
+
+@media only screen and (min-width: 501px) {
+	.NavigationItem {
+		display: flex;
+		height: 100%;
+		width: auto;
+		align-items: center;
+	}
+
+	.NavigationItem a {
+		color: white;
+		height: 100%;
+		padding: 1.6rem 1rem;
+		border-bottom: 0.4rem solid transparent;
+	}
+
+	.NavigationItem a:hover,
+	.NavigationItem a:active,
+	.NavigationItem a.active {
+		background-color: #8f5c2c;
+		border-bottom: 0.4rem solid #40a4c8;
+		color: white;
+	}
+}
