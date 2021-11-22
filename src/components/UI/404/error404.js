@@ -1,7 +1,6 @@
 import React from "react";
 
 const error404 = (props) => {
-	console.log(props.location);
 	return (
 		<div
 			style={{

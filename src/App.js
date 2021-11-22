@@ -10,6 +10,7 @@ import error404 from "./components/UI/404/error404";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import asyncComponent from "./asynComponent/asyncComponent";
+// import axios from "./axios-orders";
 
 const asyncCheckout = asyncComponent(() => {
 	return import("./containers/Checkout/Checkout");
@@ -20,6 +21,20 @@ const asyncOrders = asyncComponent(() => {
 const asyncAuth = asyncComponent(() => {
 	return import("./containers/Auth/Auth");
 });
+
+// Remark: Using global interceptors!
+// let error = null;
+// axios.interceptors.request.use((req) => {
+// 	return req;
+// });
+// axios.interceptors.response.use(
+// 	(res) => {
+// 		return res;
+// 	},
+// 	(err) => {
+// 		error = err;
+// 	}
+// );
 
 class App extends Component {
 	componentDidMount() {
@@ -52,7 +67,10 @@ class App extends Component {
 
 		return (
 			<div>
-				<Layout>{routes}</Layout>
+				<Layout>
+					{/* {error ? error.message : null} */}
+					{routes}
+				</Layout>
 			</div>
 		);
 	}
