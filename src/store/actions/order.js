@@ -30,8 +30,8 @@ export const purchaseBurger = (orderData, token) => {
 			.then((res) => {
 				dispatch(purchaseBurgerSuccess(res.data.name, orderData));
 			})
-			.catch((err) => {
-				dispatch(purchaseburgerFail(err));
+			.catch((error) => {
+				dispatch(purchaseburgerFail(error.message));
 			});
 	};
 };
@@ -81,8 +81,8 @@ export const fetchOrders = (token, userId) => {
 
 				dispatch(fetchOrdersSuccess(fetchOrders));
 			})
-			.catch((err) => {
-				dispatch(fetchOrdersFail(err));
+			.catch((error) => {
+				dispatch(fetchOrdersFail(error.message));
 			});
 	};
 };

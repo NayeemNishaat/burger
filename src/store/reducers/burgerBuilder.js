@@ -87,7 +87,7 @@ const reducer = (state = initialState, action) => {
 		// 	error: false
 		// };
 		case actionTypes.FETCH_INGREDIENTS_FAILED:
-			return updateObject(state, { error: true });
+			return updateObject(state, { error: action.error });
 		default:
 			return state;
 	}

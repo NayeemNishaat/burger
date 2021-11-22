@@ -6,6 +6,7 @@ import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 // import Auth from "./containers/Auth/Auth";
 import { Route, Switch, withRouter, Redirect } from "react-router";
 import Logout from "./containers/Auth/Logout/Logout";
+import error404 from "./components/UI/404/error404";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import asyncComponent from "./asynComponent/asyncComponent";
@@ -30,6 +31,7 @@ class App extends Component {
 			<Switch>
 				<Route path="/auth" component={asyncAuth} />
 				<Route path="/" exact component={BurgerBuilder} />
+				<Route path="/error404" exact component={error404} />
 				<Redirect to="/" />
 			</Switch>
 		);
@@ -41,6 +43,7 @@ class App extends Component {
 					<Route path="/auth" component={asyncAuth} />
 					<Route path="/checkout" component={asyncCheckout} />
 					<Route path="/orders" component={asyncOrders} />
+					<Route path="/error404" exact component={error404} />
 					<Route path="/" exact component={BurgerBuilder} />
 					<Redirect to="/" />
 				</Switch>

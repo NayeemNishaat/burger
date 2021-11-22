@@ -177,7 +177,6 @@ const mapStateToProps = (state) => {
 		isAuthenticated: state.auth.token !== null,
 		buildingBurger: state.burgerBuilder.building,
 		authRedirect: state.auth.authRedirectPath
-		// token: state.auth.token
 	};
 };
 

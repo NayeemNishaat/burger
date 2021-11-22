@@ -4,7 +4,8 @@ import { updateObject } from "../../shared/utility";
 const initialState = {
 	orders: [],
 	loading: false,
-	purchased: false
+	purchased: false,
+	error: null
 };
 
 const purchaseBurgerSuccess = (state, action) => {
@@ -32,7 +33,7 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.PURCHASE_BURGER_SUCCESS:
 			return purchaseBurgerSuccess(state, action);
 		case actionTypes.PURCHASE_BURGER_FAIL:
-			return updateObject(state, { loading: false });
+			return updateObject(state, { loading: false, error: action.error });
 		case actionTypes.FETCH_ORDERS_START:
 			return updateObject(state, { loading: true });
 		case actionTypes.FETCH_ORDERS_SUCCESS:
@@ -41,7 +42,7 @@ const reducer = (state = initialState, action) => {
 				loading: false
 			});
 		case actionTypes.FETCH_ORDERS_FAIL:
-			return updateObject(state, { loading: false });
+			return updateObject(state, { loading: false, error: action.error });
 		default:
 			return state;
 	}

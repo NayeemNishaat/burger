@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import classes from "./ContactData.module.css";
-import axios from "../../../axios-orders";
-import withErrHandler from "../../../withErrorHandler/withErrorHandler";
 import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 import { updateObject, checkValidity } from "../../../shared/utility";
+import { Redirect } from "react-router";
 
 export class ContactData extends Component {
 	// Point: It's ok to manage the state regarding the form in it's own component because it's UI related and it't not effecting any other component and the state is not mostly used in any other components. So it's better to put it's state in itself!
@@ -247,8 +246,21 @@ export class ContactData extends Component {
 			form = <Spinner />;
 		}
 
+		let redirect = null;
+		if (this.props.error) {
+			redirect = (
+				<Redirect
+					to={{
+						pathname: "/error404",
+						state: { message: this.props.error }
+					}}
+				/>
+			);
+		}
+
 		return (
 			<div className={classes.ContactData}>
+				{redirect}
 				<h4>Enter your contact data!</h4>
 				{form}
 			</div>
@@ -261,6 +273,7 @@ const mapStateToProps = (state) => {
 		ings: state.burgerBuilder.ingredients,
 		price: state.burgerBuilder.totalPrice,
 		loading: state.order.loading,
+		error: state.order.error,
 		token: state.auth.token,
 		userId: state.auth.userId
 	};
@@ -273,7 +286,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withErrHandler(ContactData, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

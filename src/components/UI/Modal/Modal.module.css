@@ -4,7 +4,7 @@
 	background-color: white;
 	width: 70%;
 	border: 1px solid #ccc;
-	box-shadow: 1px 1px 1px black;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
 	padding: 4rem;
 	left: 15%;
 	top: 30%;

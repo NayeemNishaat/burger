@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Order from "../../components/Order/Order";
-import axios from "../../axios-orders";
-import withErrorHandler from "../../withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -12,6 +10,11 @@ export class Orders extends Component {
 	}
 
 	render() {
+		const redirect = this.props.error
+			? this.props.history.push("/error404", {
+					message: this.props.error
+			  })
+			: null;
 		let orders = <Spinner />;
 		if (!this.props.loading) {
 			orders = this.props.orders.map((order) => (
@@ -22,7 +25,12 @@ export class Orders extends Component {
 				/>
 			));
 		}
-		return <div>{orders}</div>;
+		return (
+			<div>
+				{redirect}
+				{orders}
+			</div>
+		);
 	}
 }
 
@@ -31,7 +39,8 @@ const mapStateToProps = (state) => {
 		orders: state.order.orders,
 		loading: state.order.loading,
 		token: state.auth.token,
-		userId: state.auth.userId
+		userId: state.auth.userId,
+		error: state.order.error
 	};
 };
 
@@ -42,7 +51,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withErrorHandler(Orders, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

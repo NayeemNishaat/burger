@@ -22,10 +22,11 @@ const setIngredients = (ingredients) => {
 	};
 };
 
-const fetchIngredientsFailed = () => {
+const fetchIngredientsFailed = (error) => {
 	// Note: This dispatch is sync!
 	return {
-		type: actionTypes.FETCH_INGREDIENTS_FAILED
+		type: actionTypes.FETCH_INGREDIENTS_FAILED,
+		error: error
 	};
 };
 
@@ -39,8 +40,8 @@ export const initIngredients = () => {
 			.then((res) => {
 				dispatch(setIngredients(res.data));
 			})
-			.catch(() => {
-				dispatch(fetchIngredientsFailed());
+			.catch((error) => {
+				dispatch(fetchIngredientsFailed(error.message));
 			});
 	};
 };

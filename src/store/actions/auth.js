@@ -68,8 +68,8 @@ export const auth = (email, password, isSignUp) => {
 				dispatch(authSuccess(res.data.idToken, res.data.localId));
 				dispatch(checkAuthTimeout(res.data.expiresIn));
 			})
-			.catch((err) => {
-				dispatch(authFail(err.response.data.error));
+			.catch((error) => {
+				dispatch(authFail(error.response.data.error));
 			});
 	};
 };

@@ -4,8 +4,6 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import axios from "../../axios-orders";
-import withErrorHandler from "../../withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index"; // Point: "index" can be omitted!
 
@@ -78,9 +76,8 @@ export class BurgerBuilder extends Component {
 		}
 
 		let orderSummary = null;
-
 		let burger = this.props.error ? (
-			<p>Failed to get ingredients!</p>
+			this.props.history.push("/error404", { message: this.props.error })
 		) : (
 			<Spinner />
 		);
@@ -150,7 +147,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withErrorHandler(BurgerBuilder, axios)); // Remark: "connect" with return a function that adds some extra props to the element!
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder); // Remark: "connect" with return a function that adds some extra props to the element!
