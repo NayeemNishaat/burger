@@ -1,4 +1,4 @@
-import { put } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import axios from "axios";
 import * as actions from "../actions/index";
 import { delay } from "redux-saga/effects";
@@ -6,9 +6,10 @@ import { delay } from "redux-saga/effects";
 // Important: * means this is a generator function!
 export function* logOutSaga() {
 	// Note: "yeild" means execute step by step and after finishing the current step go to the next step!
-	yield localStorage.removeItem("token");
-	yield localStorage.removeItem("expirationDate");
-	yield localStorage.removeItem("userId");
+
+	yield call([localStorage, "removeItem"], "token");
+	yield call([localStorage, "removeItem"], "expirationDate");
+	yield call([localStorage, "removeItem"], "userId");
 	yield put(actions.logOutSucceed());
 }
 

@@ -11,7 +11,7 @@ import orderReducer from "./store/reducers/order";
 import thunk from "redux-thunk";
 import authReducer from "./store/reducers/auth";
 import createSagaMiddleware from "@redux-saga/core";
-import { watchAuth, watchBurgerBuilder } from "./store/sagas";
+import { watchAuth, watchBurgerBuilder, watchOrder } from "./store/sagas";
 
 // Note: Making Redux-Dev-Tools only available in development mode.
 const componentEnhancers =
@@ -34,6 +34,7 @@ const store = createStore(
 
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBurgerBuilder);
+sagaMiddleware.run(watchOrder);
 
 // const store = createStore(
 // 	burgerBuilderReducer,
