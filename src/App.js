@@ -22,7 +22,7 @@ const asyncAuth = asyncComponent(() => {
 	return import("./containers/Auth/Auth");
 });
 
-// Remark: Using global interceptors!
+// Remark: Using global interceptors! It's Buggy though.
 // let error = null;
 // axios.interceptors.request.use((req) => {
 // 	return req;
