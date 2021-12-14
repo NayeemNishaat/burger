@@ -12,89 +12,87 @@ const ContactData = (props) => {
 	// Point: It's ok to manage the state regarding the form in it's own component because it's UI related and it't not effecting any other component and the state is not mostly used in any other components. So it's better to put it's state in itself!
 
 	const [orderForm, setOrderForm] = useState({
-		orderForm: {
-			name: {
-				elementType: "input",
-				elementConfig: {
-					type: "text",
-					placeholder: "Name"
-				},
-				value: "",
-				validation: {
-					required: true
-				},
-				valid: false,
-				touched: false
+		name: {
+			elementType: "input",
+			elementConfig: {
+				type: "text",
+				placeholder: "Name"
 			},
-			street: {
-				elementType: "input",
-				elementConfig: {
-					type: "text",
-					placeholder: "Street"
-				},
-				value: "",
-				validation: {
-					required: true
-				},
-				valid: false,
-				touched: false
+			value: "",
+			validation: {
+				required: true
 			},
-			zipCode: {
-				elementType: "input",
-				elementConfig: {
-					type: "text",
-					placeholder: "ZIP"
-				},
-				value: "",
-				validation: {
-					required: true,
-					minLength: 3,
-					maxLength: 5
-				},
-				valid: false,
-				touched: false
+			valid: false,
+			touched: false
+		},
+		street: {
+			elementType: "input",
+			elementConfig: {
+				type: "text",
+				placeholder: "Street"
 			},
-			country: {
-				elementType: "input",
-				elementConfig: {
-					type: "text",
-					placeholder: "Country"
-				},
-				value: "",
-				validation: {
-					required: true
-				},
-				valid: false,
-				touched: false
+			value: "",
+			validation: {
+				required: true
 			},
-			email: {
-				elementType: "input",
-				elementConfig: {
-					type: "email",
-					placeholder: "Email"
-				},
-				value: "",
-				validation: {
-					required: true,
-					isEmail: true
-				},
-				valid: false,
-				touched: false
+			valid: false,
+			touched: false
+		},
+		zipCode: {
+			elementType: "input",
+			elementConfig: {
+				type: "text",
+				placeholder: "ZIP"
 			},
-			deliveryMethod: {
-				elementType: "select",
-				elementConfig: {
-					options: [
-						{ value: "fastest", displayValue: "Fastest" },
-						{ value: "cheapest", displayValue: "Cheapest" }
-					]
-				},
+			value: "",
+			validation: {
+				required: true,
+				minLength: 3,
+				maxLength: 5
+			},
+			valid: false,
+			touched: false
+		},
+		country: {
+			elementType: "input",
+			elementConfig: {
+				type: "text",
+				placeholder: "Country"
+			},
+			value: "",
+			validation: {
+				required: true
+			},
+			valid: false,
+			touched: false
+		},
+		email: {
+			elementType: "input",
+			elementConfig: {
+				type: "email",
+				placeholder: "Email"
+			},
+			value: "",
+			validation: {
+				required: true,
+				isEmail: true
+			},
+			valid: false,
+			touched: false
+		},
+		deliveryMethod: {
+			elementType: "select",
+			elementConfig: {
+				options: [
+					{ value: "fastest", displayValue: "Fastest" },
+					{ value: "cheapest", displayValue: "Cheapest" }
+				]
+			},
 
-				// Important: We need to set default case for select element's value if the options are not changed!
-				value: "fastest",
-				validation: {},
-				valid: true
-			}
+			// Important: We need to set default case for select element's value if the options are not changed!
+			value: "fastest",
+			validation: {},
+			valid: true
 		}
 	});
 

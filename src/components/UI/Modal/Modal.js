@@ -18,7 +18,12 @@ const Modal = (props) => (
 );
 
 // Note: In class based component we can use PureComponent which is equivalent to memo in functional component.
-export default memo(Modal);
+export default memo(
+	Modal,
+	(prevProps, nextProps) =>
+		nextProps.show === prevProps.show &&
+		nextProps.children === prevProps.children
+); // Important: We need to return if the next and previous props are equal. Hence we are making equality check!
 // export default memo(Modal); // Remark: It's wrapped with react memo because inside this component orderSummary is placed. And we don't always need to update orderSummary. orderSummary only needs to update when Modal is shown! So, when Modal changes it will update and so the components inside it (orderSummary) will also update.
 // shouldComponentUpdate(nextProps, nexrState){
 // 	return nextProps.show !== this.props.show || this.props.children !==nextprops.children
