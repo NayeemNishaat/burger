@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
@@ -7,57 +7,57 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index"; // Point: "index" can be omitted!
 
-export class BurgerBuilder extends Component {
+const BurgerBuilder = (props) => {
 	// Important: Note: purchasable, purchasing, loading and error are local UI state. These are not highly used in any other components. So, it's better to manage them locally. Ingredients and total proice are used in other components. So, we should manage those by using "redux"!
-	state = {
-		purchasing: false
-		// loading: false,
-		// error: false
-	};
+	const [purchasing, setPurchasing] = useState(false);
 
-	componentDidMount() {
-		// axios
-		// 	.get(
-		// 		"https://burger-lby-default-rtdb.asia-southeast1.firebasedatabase.app/ingredients.json"
-		// 	)
-		// 	.then((res) => {
-		// 		this.setState({ ingredients: res.data });
-		// 	})
-		// 	.catch(() => {
-		// 		this.setState({ error: true });
-		// 	});
+	const { onInitIngredients } = props;
 
-		this.props.onInitIngredients();
-	}
+	useEffect(() => {
+		onInitIngredients();
+	}, [onInitIngredients]);
 
-	purchaseContinueHandler = () => {
+	// componentDidMount() {
+	// axios
+	// 	.get(
+	// 		"https://burger-lby-default-rtdb.asia-southeast1.firebasedatabase.app/ingredients.json"
+	// 	)
+	// 	.then((res) => {
+	// 		this.setState({ ingredients: res.data });
+	// 	})
+	// 	.catch(() => {
+	// 		this.setState({ error: true });
+	// 	});
+	// }
+
+	const purchaseContinueHandler = () => {
 		// const queryParams = [];
-		// for (const i in this.props.ings) {
+		// for (const i in props.ings) {
 		// 	queryParams.push(`
-		// 		${encodeURIComponent(i)}=${encodeURIComponent(this.props.ings[i])}`);
+		// 		${encodeURIComponent(i)}=${encodeURIComponent(props.ings[i])}`);
 		// }
 
-		// queryParams.push(`price=${this.props.price}`);
+		// queryParams.push(`price=${props.price}`);
 		// const queryString = queryParams.join(`&`);
 
-		this.props.onInitPurchase();
-		this.props.history.push("/checkout");
+		props.onInitPurchase();
+		props.history.push("/checkout");
 	};
 
-	purchaseCancelHandler = () => {
-		this.setState({ purchasing: false });
+	const purchaseCancelHandler = () => {
+		setPurchasing(false);
 	};
 
 	// Note: Always use arrow funtion. Ran into trouble for using function expression!
-	purchaseHandler = () => {
-		if (this.props.isAuthenticated) this.setState({ purchasing: true });
+	const purchaseHandler = () => {
+		if (props.isAuthenticated) setPurchasing(true);
 		else {
-			this.props.onSetAuthRedirectPath("/checkout");
-			this.props.history.push("/auth");
+			props.onSetAuthRedirectPath("/checkout");
+			props.history.push("/auth");
 		}
 	};
 
-	updatePurchaseHandler = (ingredients) => {
+	const updatePurchaseHandler = (ingredients) => {
 		const sum = Object.values(ingredients).reduce((acc, el) => {
 			return acc + el;
 		}, 0);
@@ -65,65 +65,58 @@ export class BurgerBuilder extends Component {
 		return sum > 0;
 	};
 
-	render() {
-		const disabledInfo = {
-			...this.props.ings
-		};
+	const disabledInfo = {
+		...props.ings
+	};
 
-		// Remark: for-in loop is used for objects and it mutates the original object and returns that object!
-		for (const key in disabledInfo) {
-			disabledInfo[key] = disabledInfo[key] === 0;
-		}
+	// Remark: for-in loop is used for objects and it mutates the original object and returns that object!
+	for (const key in disabledInfo) {
+		disabledInfo[key] = disabledInfo[key] === 0;
+	}
 
-		let orderSummary = null;
-		let burger = this.props.error ? (
-			this.props.history.push("/error404", { message: this.props.error })
-		) : (
-			<Spinner />
-		);
+	let orderSummary = null;
+	let burger = props.error ? (
+		props.history.push("/error404", { message: props.error })
+	) : (
+		<Spinner />
+	);
 
-		if (this.props.ings) {
-			burger = (
-				<Fragment>
-					<Burger ingredients={this.props.ings} />
-					<BuildControls
-						ingredientAdded={this.props.onIngredientAdded}
-						// Important: Remark: We don't need to pass the argument here because we are already passing the argument from the "BuildControls" component!
-						ingredientRemoved={this.props.onIngredientRemoved}
-						disabled={disabledInfo}
-						isAuth={this.props.isAuthenticated}
-						price={this.props.price}
-						purchasable={this.updatePurchaseHandler(
-							this.props.ings
-						)}
-						ordered={this.purchaseHandler}
-					/>
-				</Fragment>
-			);
-
-			orderSummary = (
-				<OrderSummary
-					price={this.props.price}
-					ingredients={this.props.ings}
-					purchaseCancelled={this.purchaseCancelHandler}
-					purchaseContinued={this.purchaseContinueHandler}
-				/>
-			);
-		}
-
-		return (
+	if (props.ings) {
+		burger = (
 			<Fragment>
-				<Modal
-					show={this.state.purchasing}
-					modalClosed={this.purchaseCancelHandler}
-				>
-					{orderSummary}
-				</Modal>
-				{burger}
+				<Burger ingredients={props.ings} />
+				<BuildControls
+					ingredientAdded={props.onIngredientAdded}
+					// Important: Remark: We don't need to pass the argument here because we are already passing the argument from the "BuildControls" component!
+					ingredientRemoved={props.onIngredientRemoved}
+					disabled={disabledInfo}
+					isAuth={props.isAuthenticated}
+					price={props.price}
+					purchasable={updatePurchaseHandler(props.ings)}
+					ordered={purchaseHandler}
+				/>
 			</Fragment>
 		);
+
+		orderSummary = (
+			<OrderSummary
+				price={props.price}
+				ingredients={props.ings}
+				purchaseCancelled={purchaseCancelHandler}
+				purchaseContinued={purchaseContinueHandler}
+			/>
+		);
 	}
-}
+
+	return (
+		<Fragment>
+			<Modal show={purchasing} modalClosed={purchaseCancelHandler}>
+				{orderSummary}
+			</Modal>
+			{burger}
+		</Fragment>
+	);
+};
 
 const mapStateToProps = (state) => {
 	return {

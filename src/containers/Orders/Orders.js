@@ -1,38 +1,37 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import Order from "../../components/Order/Order";
 import * as actions from "../../store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
-export class Orders extends Component {
-	componentDidMount() {
-		this.props.onFetchOrders(this.props.token, this.props.userId);
-	}
+const Orders = (props) => {
+	const { token, userId, onFetchOrders } = props;
+	useEffect(() => {
+		onFetchOrders(token, userId);
+	}, [token, userId, onFetchOrders]); // Point: Don't put the whole props here, causes infinite request loop!
 
-	render() {
-		const redirect = this.props.error
-			? this.props.history.push("/error404", {
-					message: this.props.error
-			  })
-			: null;
-		let orders = <Spinner />;
-		if (!this.props.loading) {
-			orders = this.props.orders.map((order) => (
-				<Order
-					key={order.id}
-					ingredients={order.ingredients}
-					price={order.price}
-				/>
-			));
-		}
-		return (
-			<div>
-				{redirect}
-				{orders}
-			</div>
-		);
+	const redirect = props.error
+		? props.history.push("/error404", {
+				message: props.error
+		  })
+		: null;
+	let orders = <Spinner />;
+	if (!props.loading) {
+		orders = props.orders.map((order) => (
+			<Order
+				key={order.id}
+				ingredients={order.ingredients}
+				price={order.price}
+			/>
+		));
 	}
-}
+	return (
+		<div>
+			{redirect}
+			{orders}
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => {
 	return {
