@@ -21,6 +21,8 @@ const Auth = React.lazy(() => {
 	return import("./containers/Auth/Auth");
 });
 
+// Important: useCallback is used to stop recreating any objects unnecessarily by caching them!
+
 // Remark: Using global interceptors!
 // let error = null;
 // axios.interceptors.request.use((req) => {
